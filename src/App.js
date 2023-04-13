@@ -12,7 +12,7 @@ const useContador = (inicial) =>{
 
 function App() {
   
-  const [contador, incrementar] = useContador(0)
+  const [ contador, incrementar ] = useContador(0)
 
   useEffect(() =>{
     document.title = contador;
