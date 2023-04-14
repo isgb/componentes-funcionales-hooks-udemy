@@ -1,63 +1,37 @@
-import { Component, useEffect, useState} from 'react';
+import { useReducer, useState } from 'react';
 import './App.css';
 
-const useContador = (inicial) =>{
-  const [contador, setContador] = useState(0);
-  const incrementar = () =>{
-    setContador( contador + 1)
-  }
+// const state = { contador: 0 }
+// action = { type = string, payload: any }
 
-  return [contador,incrementar]
-}
+const inicial = { contador : 0 }
 
-// const Interval = ({contador}) => {
-
-//   useEffect(()=>{
-//    console.log("Componente Montado "+ contador)
-//    const i = setInterval(() => console.log(contador), 1000)
-//     // Desuscribir
-//     return () => clearInterval(i)
-//   }, [contador])
-
-//   return(
-//     <p>Interval</p>
-//   )
-
-// }
-
-class Interval extends Component{
-  intervalo = ''
-
-  componentDidMount(){
-      this.intervalo = setInterval(()=> console.log(this.props.contador), 1000)
-  }
-
-  componentWillUnmount(){
-    clearInterval(this.intervalo)
-  }
-
-  render(){
-    return(
-      <p>Intervalo</p>
-    )
+const reducer = (state, action) => {
+  switch(action.type){
+    case 'incrementar':
+      return { contador: (state.contador + 1) }
+    case 'decrementar':
+      return { contador: (state.contador - 1) }
+    case 'set':
+      return { contador: action.payload }
+    default:
+      return state
   }
 }
 
 const App = () => {
-  
-  const [ contador, incrementar ] = useContador(0)
+ const [state, dispatch] = useReducer(reducer, inicial)
+ const [valor, setValor] = useState(0)
 
-  useEffect(() =>{
-    document.title = contador;
-  }, [contador])
-
-  return (
-    <div>
-        Contador : {contador}
-        <button onClick={incrementar}>Incrementar</button>
-        <Interval contador={contador}/>
-    </div>
-  );
+ return(
+  <div>
+    Contador : {state.contador}
+    <input value={valor} onChange={e => setValor(e.target.value)}/>
+    <button onClick={() => dispatch({ type: 'incrementar' })}>Más</button>
+    <button onClick={() => dispatch({ type: 'decrementar' })}>Menos</button>
+    <button onClick={() => dispatch({ type: 'set' , payload: Number(valor) })}>Set</button>
+  </div>
+ )
 }
 
 export default App;
