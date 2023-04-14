@@ -1,26 +1,24 @@
-import { useRef } from 'react';
-import './App.css';
 
 const App = () => {
 
-  // useRef Sirve para obtener los elementos HTML del DOM de un componente
-  const ref = useRef()
-  const inputRef = useRef()
-  const click = () => {
-    console.log(ref.current.clientHeight)
-    ref.current.innerHTML = 'Chanchito Feliz'
-  }
-  const focus = () =>{
-    inputRef.current.focus()
+  const submit = (e) =>{
+    e.preventDefault()
+    //console.log(Array.from(new FormData(e.target)))
+    const data = Array.from(new FormData(e.target))
+    console.log(Object.fromEntries(data))
   }
 
   return(
-    // <div onClick={click} ref={ref}>lala</div>
-    <div>
-      <input ref={inputRef}/>
-      <button onClick={focus}>Focus</button>
-      <div onClick={click} ref={ref}>lala</div>
-    </div>
+    <form onSubmit={submit}>
+      <div>
+        <span>
+          lala
+        </span>
+        <input name="campo"/>
+      </div>
+      <input name="campo-2"/>
+      <input type="submit" value='Enviar'/>
+    </form>
   )
 }
 
