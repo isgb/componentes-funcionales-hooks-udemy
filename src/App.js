@@ -1,4 +1,4 @@
-import { useEffect, useState} from 'react';
+import { Component, useEffect, useState} from 'react';
 import './App.css';
 
 const useContador = (inicial) =>{
@@ -10,15 +10,37 @@ const useContador = (inicial) =>{
   return [contador,incrementar]
 }
 
-const Interval = (contador) => {
-  useEffect(()=>{
-   const i = setInterval(() => console.log(contador), 1000)
-    // Desuscribir
-    return () => clearInterval(i)
-  }, [contador])
-  return(
-    <p>Interval</p>
-  )
+// const Interval = ({contador}) => {
+
+//   useEffect(()=>{
+//    console.log("Componente Montado "+ contador)
+//    const i = setInterval(() => console.log(contador), 1000)
+//     // Desuscribir
+//     return () => clearInterval(i)
+//   }, [contador])
+
+//   return(
+//     <p>Interval</p>
+//   )
+
+// }
+
+class Interval extends Component{
+  intervalo = ''
+
+  componentDidMount(){
+      this.intervalo = setInterval(()=> console.log(this.props.contador), 1000)
+  }
+
+  componentWillUnmount(){
+    clearInterval(this.intervalo)
+  }
+
+  render(){
+    return(
+      <p>Intervalo</p>
+    )
+  }
 }
 
 const App = () => {
