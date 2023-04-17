@@ -2,15 +2,20 @@ import { useState } from 'react'
 
 const App = () => {
 
-  const [value, setValue] = useState({ normal: 'por defecto', 
-  texto: '' ,select : 'chanchofeliz', check: false})
-  const handleChange = (/*e*/ {target}) => {
+  const [value, setValue] = useState({
+    normal: 'por defecto',
+    texto: '', 
+    select: 'chanchofeliz', 
+    check: false,
+    estado : 'feliz'
+  })
+  const handleChange = (/*e*/ { target }) => {
     //setValue({ [e.target.name] : e.target.value })
     setValue((state) => ({
       // ...value,
       // [e.target.name] : e.target.value 
       ...state,
-      [target.name]: target.type === "checkbox" ? target.checked :target.value
+      [target.name]: target.type === "checkbox" ? target.checked : target.value
     }))
   }
   console.log(value)
@@ -35,6 +40,25 @@ const App = () => {
         onChange={handleChange}
         checked={value.check}
       />
+
+      <div>
+        <label>Chancho</label>
+        <input onChange={handleChange}
+          checked={value.estado === 'feliz'}
+          type='radio' value='feliz'
+          name='estado'
+          />Feliz
+        <input onChange={handleChange}
+          checked={value.estado === 'triste'}
+          type='radio' value='triste'
+          name='estado'
+          />Triste
+        <input onChange={handleChange}
+          checked={value.estado === 'felipe'}
+          type='radio' value='felipe'
+          name='estado'
+          />Felipe
+      </div>
     </div>
   )
 
