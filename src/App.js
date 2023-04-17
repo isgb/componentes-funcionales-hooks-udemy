@@ -1,25 +1,20 @@
-import { useRef } from 'react';
+import {useState} from 'react'
 
-const App = () => {
+const App = () =>{
 
- const submit = (e) =>{
-  e.preventDefault()
-  const data = Array.from(new FormData(e.target))
-  console.log(Object.fromEntries(data))
- }
+  const [value, setValue] = useState('')
 
+  const handleChange = (e) =>{
+    setValue(e.target.value)
+  }
+  console.log(value)
   return(
-    <div>
-      <div>
-        <span>lala</span>
-        <input type="text" name='campo'/>
-      </div>
-      <input name='campo-2'/>
-      <input type="file" name='archivo'/>
-      <input type='submit' value='Enviar'/>
-      
-    </div>
+     <div>
+      {value.length < 5 ? <span>longitud minima de 5</span> : null}
+      <input type="text" name="normal" value={value} onChange={handleChange}/>
+     </div>
   )
+
 }
 
-export default App;
+export default App
